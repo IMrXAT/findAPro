@@ -4,10 +4,24 @@
     Now I'm trying to post tasks that should be executed
 </p>
 
-
+<h3>User Profile</h3>
 <ul>
-    {{#tasks}}
-        <li>{{name}}</li>
-    {{/tasks}}
+    <li>Username: {{authentication.name}}</li>
+    <li>roles: {{authentication.authorities}}</li>
 </ul>
 
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+
+
+<a href="/registration">registration</a>
+
+
+<a href="/tasks">tasks</a>
+
+<a href="/adding_task">add new task</a>
+
+
+<a href="/roles">roles</a>

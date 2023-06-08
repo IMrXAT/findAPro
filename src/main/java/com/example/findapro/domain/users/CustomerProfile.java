@@ -1,12 +1,14 @@
-package com.example.findapro.domain;
+package com.example.findapro.domain.users;
 
+import com.example.findapro.domain.Task;
+import com.example.findapro.domain.users.User;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "customers")
-public class CustomerProfile extends User{
+public class CustomerProfile extends User {
 
     @Column(name = "rating")
     private Double rating;

@@ -1,0 +1,14 @@
+<h1>Here you can find tasks you want to do</h1>
+
+<ul>
+    {{#tasks}}
+        <li>{{taskName}}
+            {{description}}
+            {{expectedPrice}}
+            <form action="/delete/tasks/{{id}}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+
+    {{/tasks}}
+</ul>

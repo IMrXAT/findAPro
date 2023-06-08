@@ -1,9 +1,9 @@
-package com.example.findapro.domain;
+package com.example.findapro.domain.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.example.findapro.domain.FinishedTask;
+import com.example.findapro.domain.Task;
+import com.example.findapro.domain.users.User;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -17,6 +17,14 @@ public class ExecutorProfile extends User {
     private String description;
     @OneToMany
     private List<FinishedTask> finishedTasks;
+    @ManyToMany
+    @JoinTable(
+            name = "tasks_responses",
+            joinColumns = @JoinColumn(name = "executor_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id")
+    )
+    private List<Task> responseTasks;
+
 
 
     //getters and setters

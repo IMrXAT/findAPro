@@ -1,12 +1,11 @@
 package com.example.findapro.domain;
 
-import jakarta.persistence.Column;
+import com.example.findapro.domain.users.ExecutorProfile;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "finished_tasks")

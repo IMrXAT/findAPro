@@ -1,33 +1,65 @@
 package com.example.findapro.domain;
 
+import com.example.findapro.domain.users.CustomerProfile;
+import com.example.findapro.domain.users.ExecutorProfile;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 
-enum TaskStatus{
-    IN_PROGRESS,
-    FINISHED,
-    NOT_STARTED
-}
+
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "tasks")
+@NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue
     private Long id;
-    private LocalDateTime post_time;
-    private String description;
     private String taskName;
-    private LocalDateTime deadline;
+    private String description;
     private Integer expectedPrice;
-
+    private LocalDateTime postTime;
+    private LocalDateTime deadline;
+    @ManyToOne
+    private Category category;
     @ManyToOne
     private CustomerProfile customer;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
-    @ManyToOne(optional = false)
-    private Category category;
+    @ManyToMany(mappedBy = "responseTasks")
+    private List<ExecutorProfile> executorsSentResponse;
+
+
+    public List<ExecutorProfile> getExecutorsSentResponse() {
+        return executorsSentResponse;
+    }
+
+    public void setExecutorsSentResponse(List<ExecutorProfile> executorsSentResponse) {
+        this.executorsSentResponse = executorsSentResponse;
+    }
+
+    public Task(String taskName, String description, Integer expectedPrice, LocalDateTime postTime, LocalDateTime deadline, Category category, CustomerProfile customer, TaskStatus status) {
+        this.taskName = taskName;
+        this.description = description;
+        this.expectedPrice = expectedPrice;
+        this.postTime = postTime;
+        this.deadline = deadline;
+        this.category = category;
+        this.customer = customer;
+        this.status = status;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
@@ -37,12 +69,12 @@ public class Task {
         this.id = id;
     }
 
-    public LocalDateTime getPost_time() {
-        return post_time;
+    public LocalDateTime getPostTime() {
+        return postTime;
     }
 
-    public void setPost_time(LocalDateTime post_time) {
-        this.post_time = post_time;
+    public void setPostTime(LocalDateTime post_time) {
+        this.postTime = post_time;
     }
 
     public String getDescription() {

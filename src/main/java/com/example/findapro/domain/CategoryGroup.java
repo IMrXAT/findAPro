@@ -9,9 +9,14 @@ import java.util.List;
 public class CategoryGroup {
     @Id @GeneratedValue
     private Long id;
+
+    @Column(name = "group_name")
     private String groupName;
-    @OneToMany
+    @OneToMany(mappedBy = "categoryGroup")
     private List<Category> categories;
+
+
+
 
     public Long getId() {
         return id;
