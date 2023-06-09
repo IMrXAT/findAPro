@@ -1,0 +1,15 @@
+<h3>Admin Profile</h3>
+
+<h2>Here you can kill someone</h2>
+
+TODO: search and delete users
+{{#allUsers}}
+    <li>
+        {{username}}
+        {{password}}
+        {{#roles}}
+             <li>{{roleName}}</li>
+        {{/roles}}
+
+    </li>
+{{/allUsers}}

@@ -1,6 +1,8 @@
 package com.example.findapro.domain;
 
+import com.example.findapro.domain.users.CustomerProfile;
 import com.example.findapro.domain.users.ExecutorProfile;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -14,8 +16,22 @@ public class FinishedTask extends Task {
     private ExecutorProfile executor;
 
     private LocalDateTime closingTime;
-    private String cost;
+    @Column(name = "finish_cost")
+    private Integer cost;
+    @Column(name = "execution_rating")
     private Double rating;
+
+    public FinishedTask(String taskName, String description, Integer expectedPrice, LocalDateTime postTime, LocalDateTime deadline, Category category, CustomerProfile customer, TaskStatus status, ExecutorProfile executor, LocalDateTime closingTime, Integer cost, Double rating) {
+        super(taskName, description, expectedPrice, postTime, deadline, category, customer, status);
+        this.executor = executor;
+        this.closingTime = closingTime;
+        this.cost = cost;
+        this.rating = rating;
+    }
+
+    public FinishedTask() {
+
+    }
 
     public ExecutorProfile getExecutor() {
         return executor;
@@ -33,11 +49,11 @@ public class FinishedTask extends Task {
         this.closingTime = closingTime;
     }
 
-    public String getCost() {
+    public Integer getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 

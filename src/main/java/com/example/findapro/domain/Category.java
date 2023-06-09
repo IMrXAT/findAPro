@@ -5,21 +5,21 @@ import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name = "categories")
-public class Category {
-    @Id @GeneratedValue
-    private Long id;
-    @Column(name = "category_name")
-    String categoryName;
+    @Entity
+    @Table(name = "categories")
+    public class Category {
+        @Id @GeneratedValue
+        private Long id;
+        @Column(name = "category_name")
+        String categoryName;
 
-    @ManyToOne
-    @JoinColumn(name = "category_group_id")
-    private CategoryGroup categoryGroup;
+        @ManyToOne
+        @JoinColumn(name = "category_group_id")
+        private CategoryGroup categoryGroup;
 
-    @OneToMany
-    @JoinColumn(name = "category_id")
-    private List<Task> tasks;
+        @OneToMany
+        @JoinColumn(name = "category_id")
+        private List<Task> tasks;
 
 
 

@@ -1,6 +1,7 @@
 package com.example.findapro.app;
 
 
+import com.example.findapro.core.task.TaskDto;
 import com.example.findapro.core.task.TaskService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -20,30 +21,36 @@ public class TaskController {
     }
 
 
-//    @GetMapping("/tasks")
-//    public String index(Model model){
-//        model.addAttribute("tasks", taskService.getTasks());
-//        return "index";
-//    }
+    @GetMapping("/tasks")
+    public String tasks(Model model){
+        model.addAttribute("tasks", taskService.getTasks());
+        return "tasks";
+    }
 
-
-    @GetMapping("/adding_task")
+    @GetMapping("/adding-task")
     public String addingTaskPage(Model model){
         return "adding_task";
     }
 
 
 
-//    @PostMapping("/new-task")
-//    public String addNewTask(@ModelAttribute NewTask newTask, Authentication authentication){
-//        taskService.createTask(newTask, authentication.getName());
-//        return "redirect:/";
-//    }
+    @PostMapping("/adding-task")
+    public String addNewTask(@ModelAttribute TaskDto newTask, Authentication authentication){
+        taskService.createTask(newTask, authentication.getName());
+        return "redirect:/";
+    }
 
 
     @PostMapping("/delete/tasks/{taskId}")
     public String deleteTask(@PathVariable Long taskId) {
         taskService.delete(taskId);
+        return "redirect:/tasks";
+    }
+
+
+    @PostMapping("/close/tasks/{taskId}")
+    public String closeTask(@PathVariable Long taskId, Authentication authentication){
+        taskService.closeTask(taskId, authentication.getName());
         return "redirect:/tasks";
     }
 

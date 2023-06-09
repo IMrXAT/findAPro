@@ -1,0 +1,34 @@
+version: "3"
+services:
+  fap-api:
+    container_name: find-a-pro
+    build: ./
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://fap-postgres:5431/find_a_pro
+    ports:
+      - "8080:8080"
+#    networks:
+#      - postgres-web
+    depends_on:
+      - fap-postgres
+
+  fap-postgres:
+    container_name: fap-postgres
+    image: 'postgres:13.1-alpine'
+    environment:
+      - POSTGRES_USER=mrxat
+      - POSTGRES_PASSWORD=01092009q
+      - POSTGRES_DB=find_a_pro
+#      - PGDATA=/var/lib/postgresql/data/find_a_pro
+#    networks:
+#      - postgres-web
+    expose:
+      - "5435"
+    ports:
+      - "5435:5435"
+    command: -p 5431
+    restart: always
+
+#networks:
+#  postgres-web:
+#    driver: bridge

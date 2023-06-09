@@ -1,0 +1,10 @@
+<h3>User Profile</h3>
+<ul>
+    <li>Username: {{user.username}}</li>
+    {{#user.roles}}
+        <li>{{roleName}}</li>
+    {{/user.roles}}
+</ul>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>

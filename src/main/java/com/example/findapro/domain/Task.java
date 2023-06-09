@@ -18,9 +18,12 @@ public class Task {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(name = "task_name")
     private String taskName;
     private String description;
+    @Column(name = "expected_price")
     private Integer expectedPrice;
+    @Column(name = "creating_time")
     private LocalDateTime postTime;
     private LocalDateTime deadline;
     @ManyToOne

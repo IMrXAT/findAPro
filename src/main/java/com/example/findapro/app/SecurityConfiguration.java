@@ -20,9 +20,10 @@ public class SecurityConfiguration{
     @Bean
     SecurityFilterChain configureSecurity(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests()
-                .requestMatchers("/login", "/registration", "/new-user", "/", "/tasks","/tasks/**", "/search").permitAll()
-                .requestMatchers("/adding_task", "/roles").hasAuthority("customer")
-                .requestMatchers("/new-task").authenticated()
+                .requestMatchers("/login", "/registration", "/new-user", "/", "/tasks","/tasks/**", "/search", "/close",  "/close/**", "/finished-tasks").permitAll()
+                .requestMatchers("/adding-task", "/roles", "/delete/**").hasAnyAuthority("customer", "admin", "executor")
+                .requestMatchers("/admin").hasAuthority("admin")
+                .requestMatchers("/user-profile", "/categories").authenticated()
                 .anyRequest().denyAll()
                 .and()
                 .formLogin()

@@ -3,12 +3,16 @@
 <ul>
     {{#tasks}}
         <li>{{taskName}}
-            {{description}}
             {{expectedPrice}}
+            {{customer.username}}
+            {{status}}
+            <form action="/close/tasks/{{id}}" method="post">
+                <button type="submit">Close Task</button>
+            </form>
+
             <form action="/delete/tasks/{{id}}" method="post">
                 <button type="submit">Delete</button>
             </form>
         </li>
-
     {{/tasks}}
 </ul>

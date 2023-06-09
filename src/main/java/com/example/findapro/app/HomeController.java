@@ -1,9 +1,10 @@
 package com.example.findapro.app;
 
 
-import com.example.findapro.core.role.RoleService;
-import com.example.findapro.core.task.TaskService;
+import com.example.findapro.core.user.UserRepository;
+import com.example.findapro.core.user.UserService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,25 +12,24 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class HomeController {
 
-    private final TaskService taskService;
-    private final RoleService roleService;
+    private final UserService userService;
 
-
-
-    public HomeController(TaskService taskService, RoleService roleService) {
-        this.taskService = taskService;
-        this.roleService = roleService;
+    public HomeController(UserRepository userRepository, UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/")
-    public String index(Model model, Authentication authentication){
-        model.addAttribute("authentication", authentication);
+    public String index(Model model){
         return "index";
     }
-    @GetMapping("/tasks")
-    public String tasks(Model model){
-        model.addAttribute("tasks", taskService.getTasks());
-        return "tasks";
+
+
+    @GetMapping("/admin")
+    public String adminPage(Model model, Authentication authentication){
+        UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+        model.addAttribute("allUsers", userService.allUsers());
+        model.addAttribute("admin", userDetails);
+        return "admin";
     }
 
 }

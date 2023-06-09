@@ -2,9 +2,6 @@ package com.example.findapro.core.user;
 
 import com.example.findapro.core.role.RoleRepository;
 import com.example.findapro.domain.users.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,17 +12,14 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public UserService(EntityManager entityManager, UserRepository userRepository, RoleRepository roleRepository) {
-        this.entityManager = entityManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -40,7 +34,7 @@ public class UserService implements UserDetailsService {
         Optional<User> userFromDb = userRepository.findById(userId);
         return userFromDb.orElse(new User());
     }
-    public List<User> AllUsers(){
+    public List<User> allUsers(){
         return userRepository.findAll();
     }
 
@@ -49,10 +43,15 @@ public class UserService implements UserDetailsService {
         if (userFromDB != null){
             return false;
         }
+        if (user.getUsername().equals("god")){
+            user.setRole(roleRepository.findRoleByRoleName("admin"));
+        }
         user.setRole(roleRepository.findRoleByRoleName("customer"));
+        user.setRole(roleRepository.findRoleByRoleName("executor"));
         userRepository.save(user);
         return true;
     }
+
 
     public boolean deleteUser(Long userId){
         if (userRepository.findById(userId).isPresent()){
